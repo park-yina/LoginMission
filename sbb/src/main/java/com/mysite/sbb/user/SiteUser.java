@@ -1,4 +1,6 @@
 package com.mysite.sbb.user;
+import org.hibernate.annotations.ColumnDefault;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,4 +24,7 @@ public class SiteUser {
 
 	@Column(unique = true)
 	private String email;
+	
+	@ColumnDefault("false")
+	private Boolean first;  
 }
