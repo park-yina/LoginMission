@@ -32,8 +32,8 @@ public class UserController {
 		}
 
 		try {
-			userService.create(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword1());
-		} catch (DataIntegrityViolationException e) {
+			userService.create(userCreateForm.getUsername(), userCreateForm.getEmail(),userCreateForm.getPassword1());   
+		}catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
 			bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
 			return "signup_form";
@@ -42,7 +42,10 @@ public class UserController {
 			bindingResult.reject("signupFailed", e.getMessage());
 			return "signup_form";
 		}
-
-		return "redirect:/";
+		return "redirect:/";//중복 데이터에 대한 처리
+	}
+	@GetMapping("/login")
+	public String login() {
+		return "login_form"; 
 	}
 }
