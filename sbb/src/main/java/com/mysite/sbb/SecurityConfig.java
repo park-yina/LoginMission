@@ -1,5 +1,4 @@
 package com.mysite.sbb;
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,30 +10,31 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
-
+import org.springframework.security.config.annotation.method.configuration.*;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 	@Bean
-	  SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
 				.requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
 				.csrf((csrf) -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**")))
 				.headers((headers) -> headers.addHeaderWriter(
 						new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
-				.formLogin((formLogin)->formLogin.loginPage("/user/login").defaultSuccessUrl("/"))
-				.logout((logout)->logout.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")).logoutSuccessUrl("/").invalidateHttpSession(true));
+				.formLogin((formLogin) -> formLogin.loginPage("/user/login").defaultSuccessUrl("/user/mypage/first"))
+				.logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+						.logoutSuccessUrl("/").invalidateHttpSession(true));
 		return http.build();
 	}
-
 	@Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-	@Bean
-	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-	    return authenticationConfiguration.getAuthenticationManager();
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
-
+	@Bean
+	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+			throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
 }

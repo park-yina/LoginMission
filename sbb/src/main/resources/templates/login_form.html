@@ -1,7 +1,7 @@
 <html layout:decorate="~{layout}">
 	<div layout:fragment="content" class="container my-3">
 		<form th:action="@{/user/login}" method="post">
-			
+			<h2>로그인이 필요한 페이지입니다.</h2>
 			<div th:if="${param.error}">
 				<div class="alert alert-danger">
 					사용자 ID 또는 비밀번호를 확인해주세요.
