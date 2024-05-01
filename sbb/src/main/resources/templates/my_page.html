@@ -1,3 +1,42 @@
 <html layout:decorate="~{layout}">
-    <span th:text="${로그인확인메시지}">로그인 확인</span>
+	<div  layout:fragment="content">
+    <form action="/question/list" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="imageFile" class="form-label">프로필 사진</label>
+		<input type="file" name="files" id="files" multiple="multiple" />
+    </div>
+    <button type="submit" class="btn btn-primary">업로드</button>
+</form>
+</div>
+methods: {
+  uploadImage(event) {
+    const file = event.target.files[0]; // 선택한 파일
+    this.profile_image = file; // 선택한 파일을 데이터에 저장
+  },
+  saveProfile() {
+    if (this.profile_image != null) {
+      let formData = new FormData();
+      formData.append("image", this.profile_image); // FormData에 이미지 추가
+
+      // axios를 사용하여 서버로 이미지 전송
+      axios
+        .post("/profile/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data", // FormData의 타입 설정
+          },
+        })
+        .then((response) => {
+          // 성공적으로 이미지를 업로드한 경우 처리
+          console.log("Image uploaded successfully:", response);
+        })
+        .catch((error) => {
+          // 이미지 업로드 중 오류 발생 시 처리
+          console.error("Error uploading image:", error);
+        });
+    } else {
+      alert("프로필 이미지를 선택해주세요.");
+    }
+  },
+},
+
 </html>
