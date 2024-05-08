@@ -14,8 +14,10 @@ public class Info {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(columnDefinition = "TEXT")
+	@Column(unique = true)
 	private String username;
+	
+	@Column(columnDefinition = "TEXT")
 	private String address;
 	private String nickname;
 	private String phoneNumber;

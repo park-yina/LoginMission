@@ -1,4 +1,5 @@
 package com.mysite.sbb.user;
+import java.lang.ProcessBuilder.Redirect;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class UserController {
 	    if (userService.isFirst(username)==false) {
 	        return "my_page";
 	    } else {
-	        return "/question/list";
+	        return "redirect:/";
 	    }
 	}
 

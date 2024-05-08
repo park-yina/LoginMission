@@ -71,6 +71,7 @@ public class InfoController {
         }
 
         infoService.create(username, address, nickname, phoneNumber, ranFileName);
+        infoService.changeFirst(username);
 
         return "redirect:/";
     }

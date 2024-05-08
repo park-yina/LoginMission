@@ -1,0 +1,19 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+        <h2>마이페이지</h2>
+        <div>
+            <img th:src="@{/user/profile/photo}" alt="프로필 사진" width="100" height="100">
+        </div>
+        <div>
+            <label>핸드폰 번호:</label>
+            <span th:text="${userInfo.phoneNumber}"></span>
+        </div>
+        <div>
+            <label>주소:</label>
+            <span th:text="${userInfo.address}"></span>
+        </div>
+        <div>
+            <label>닉네임:</label>
+            <span th:text="${userInfo.nickname}"></span>
+        </div>
+ </div>
