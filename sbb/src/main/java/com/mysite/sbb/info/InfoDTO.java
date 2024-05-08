@@ -10,4 +10,5 @@ public class InfoDTO {
 	private String address;
 	private String nickname;
 	private String phoneNumber;
+	private String photo;
 }

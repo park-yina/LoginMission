@@ -1,7 +1,7 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
  <h2>프로필 정보 입력</h2>
-<form th:action="@{/user/mypage/first/}" method="post">
+<form th:action="@{/user/mypage/first/}" method="post" enctype="multipart/form-data">
         <div>
             <label for="username">사용자 아이디:</label>
             <input type="text" id="username" name="username" required>
@@ -18,7 +18,11 @@
             <label for="phoneNumber">전화번호:</label>
             <input type="tel" id="phoneNumber" name="phoneNumber" required>
         </div>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <div>
+            <label for="profileImage">프로필 이미지:</label>
+            <input type="file" id="profileImage" name="file" accept="image/*" required>
+        </div>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button type="submit"  class="btn btn-primary">정보 저장</button>
     </form>
    </div>

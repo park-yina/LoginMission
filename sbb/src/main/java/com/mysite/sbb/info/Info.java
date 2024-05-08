@@ -19,5 +19,6 @@ public class Info {
 	private String address;
 	private String nickname;
 	private String phoneNumber;
+	private String photo;
 	
 }
