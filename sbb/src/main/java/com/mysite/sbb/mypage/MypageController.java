@@ -48,4 +48,3 @@ public class MypageController {
         return modelAndView;
     }
 }
-
