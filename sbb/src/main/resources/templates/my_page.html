@@ -22,8 +22,11 @@
             <label for="profileImage">프로필 이미지:</label>
             <input type="file" id="profileImage" name="file" accept="image/*" required>
         </div>
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <button type="submit"  class="btn btn-primary">정보 저장</button>
     </form>
+    <div>
+        <button type="submit"  class="btn btn-primary">정보 저장</button>
+        		        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+	</div>
    </div>
  </html>

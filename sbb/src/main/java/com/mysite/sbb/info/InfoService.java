@@ -9,6 +9,7 @@ import com.mysite.sbb.user.UserRepository;
 import com.mysite.sbb.user.UserService;
 
 import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -35,4 +36,21 @@ public class InfoService {
             this.userRepository.save(siteUser);
         }
     }
+    public Optional<Info> getInfoByUsername(String username) {
+        return infoRepository.findByUsername(username);
+    }
+    public Info save(Info info) {
+        return infoRepository.save(info);
+    }
+    public void deleteDuplicateByUsername(String username) {
+        List<Info> infos = infoRepository.findByUsernameOrderByidDesc(username);
+        if (infos.size() > 1) {
+            // id 값이 가장 큰 것을 제외한 나머지를 삭제
+            for (int i = 1; i < infos.size(); i++) {
+                infoRepository.delete(infos.get(i));
+            }
+        }
+    }
+
 }
+
