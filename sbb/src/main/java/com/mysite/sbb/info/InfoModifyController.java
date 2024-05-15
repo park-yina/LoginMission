@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import jakarta.validation.Valid;
 
 import org.springframework.ui.Model;
@@ -19,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -83,8 +86,9 @@ public class InfoModifyController {
 
                 // 파일 업로드
                 String fileDir = environment.getProperty("file.dir");
-                String root = fileDir + "/uploadFiles";
+                String root = fileDir;
                 File file = new File(root);
+          
 
                 // 만약 uploadFiles 폴더가 없으면 생성
                 if (!file.exists()) {
@@ -92,21 +96,33 @@ public class InfoModifyController {
                 }
 
                 File changeFile = new File(root + "/" + ranFileName);
-
                 // 파일 업로드
                 try {
                     singleFile.transferTo(changeFile);
                     System.out.println("파일 업로드 성공");
-                } catch (IllegalStateException | IOException e) {
+               
+
+                    } catch (IllegalStateException | IOException e) {
                     System.out.println("파일 업로드 실패");
+                    info.setPhoto("images.jpg");
                     e.printStackTrace();
                 }
             } else {
-                // 파일이 업로드되지 않은 경우 기존의 사진 정보 사용
-                info.setPhoto(infoDto.getPhoto());
+                info.setPhoto("images.jpg");
             }
-
+            
+            String username=infoDto.getUsername();
             // Info 엔티티 저장
+            String photo=infoDto.getPhoto();
+            String nickname=infoDto.getNickname();
+            String address=infoDto.getAddress();
+            String phoneNumber=infoDto.getPhoneNumber();
+            infoService.delete(infoDto.getUsername());
+            infoDto.setUsername(username);
+            infoDto.setAddress(address);
+            infoDto.setNickname(nickname);
+            infoDto.setPhoto(photo);
+            infoDto.setPhoneNumber(phoneNumber);
             infoService.save(info);
             return "redirect:/"; // 성공 페이지로 이동
         }
