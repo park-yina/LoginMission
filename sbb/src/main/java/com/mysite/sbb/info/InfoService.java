@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.mysite.sbb.user.SiteUser;
 import com.mysite.sbb.user.UserRepository;
-import com.mysite.sbb.user.UserService;
-
 import lombok.RequiredArgsConstructor;
 import java.util.List;
 
@@ -42,13 +40,18 @@ public class InfoService {
     public Info save(Info info) {
         return infoRepository.save(info);
     }
-    public void deleteDuplicateByUsername(String username) {
-        List<Info> infos = infoRepository.findByUsernameOrderByidDesc(username);
-        if (infos.size() > 1) {
-            // id 값이 가장 큰 것을 제외한 나머지를 삭제
-            for (int i = 1; i < infos.size(); i++) {
-                infoRepository.delete(infos.get(i));
-            }
+    public Info delete(String username) {
+        // 사용자 이름에 해당하는 정보를 조회
+        Optional<Info> infoOptional = infoRepository.findByUsername(username);
+        
+        // 정보가 존재하는지 확인하고 삭제
+        if (infoOptional.isPresent()) {
+            Info info = infoOptional.get();
+            infoRepository.delete(info);
+            return info;
+        } else {
+            // 정보가 존재하지 않으면 null 또는 예외 처리
+            return null; // 또는 예외 처리를 할 수 있습니다.
         }
     }
 
