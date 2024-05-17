@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 
 ### STS ###
+firease.json
 .apt_generated
 .classpath
 .factorypath
