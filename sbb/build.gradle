@@ -16,6 +16,7 @@ repositories {
 }
 
 dependencies {
+	implementatison group: 'com.google.firebase', name: 'firebase-admin', version: '8.0.1'
 	implementation 'org.commonmark:commonmark:0.21.0'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
