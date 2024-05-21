@@ -1,0 +1,45 @@
+package com.mysite.sbb.social;
+
+import java.io.IOException;
+import java.util.Map;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+
+import jakarta.servlet.http.HttpServletResponse;
+
+@Controller
+@RequestMapping("/login/social")
+public class SocialLoginController {
+
+    @GetMapping("")
+    public String googleLogin() {
+        return "social_Login"; 
+    }
+
+    @PostMapping("/processToken")
+    public String processToken(@RequestBody Map<String, String> tokenRequest, HttpServletResponse response) throws IOException {
+        String idToken = tokenRequest.get("idToken");
+        
+        try {
+            FirebaseAuth.getInstance().verifyIdToken(idToken);
+            
+            // 토큰 검증에 성공한 경우 리다이렉트
+            return "redirect:/question/list";
+        } catch (FirebaseAuthException e) {
+            System.err.println("FirebaseAuthException: " + e.getMessage());
+            
+            // 스택 트레이스 로그
+            e.printStackTrace();
+
+            // 토큰 검증이 실패한 경우
+            return "redirect:/error";
+        }
+    }
+}
